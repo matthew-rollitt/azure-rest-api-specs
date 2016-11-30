@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "BatchService",
-    "version": "2016-07-01.3.1",
+    "version": "9999-09-09.99.99",
     "description": "A client for issuing REST requests to the Azure Batch service.",
     "x-ms-code-generation-settings": {
       "name": "BatchServiceClient"
@@ -9895,6 +9895,15 @@
       "title": "A node agent SKU supported by the Batch service.",
       "description": "The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems."
     },
+    "AccessToken": {
+      "properties": {
+        "access": {
+          "type": "string",
+          "title": "The Batch resources to which the token grants access. Currently the only supported value is 'job', which grants access to the job under which the task is running.If this property is present, the authentication token is available to the task via the AZ_BATCH_AUTHENTICATION_TOKEN environment variable."
+        },          
+      },
+      "title": "The result of listing the supported node agent SKUs."
+    },
     "AccountListNodeAgentSkusResult": {
       "properties": {
         "value": {
@@ -10594,6 +10603,14 @@
           },
           "title": "A list of application packages that the Batch service will deploy to the compute node before running the command line.",
           "description": "Application packages are downloaded and deployed to a shared directory, not the task directory. Therefore, if a referenced package is already on the compute node, and is up to date, then it is not re-downloaded; the existing copy on the compute node is used. If a referenced application package cannot be installed, for example because the package has been deleted or because download failed, the task fails with a scheduling error. This property is currently not supported on jobs running on pools created using the virtualMachineConfiguration (IaaS) property. If a task specifying applicationPackageReferences runs on such a pool, it fails with a scheduling error with code TaskSchedulingConstraintFailed."
+        },
+        "authenticationTokenSettings": { 
+          "type": "array",
+          "title": "The settings for an authentication token that the task can use to perform Batch service operations.",
+          "description": "Using an authentication token allows the task to add other tasks to the job, or check the state of other tasks, without the client sending the Batch account key.",
+          "items": {
+            "$ref": "#/definitions/AccessToken"
+          }
         }
       },
       "required": ["id", "commandLine"],
@@ -10764,7 +10781,7 @@
         "storeLocation": {
           "type": "string",
           "title": "The location of the certificate store on the compute node into which to install the certificate.",
-          "description": "The default value is CurrentUser. This property is applicable only for pools configured with Windows nodes (that is, created with cloudServiceConfiguration, or with virtualMachineConfiguration using a Windows image reference). For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed.",
+          "description": "The default value is CurrentUser. This property is applicable only for pools configured with Windows nodes (that is, created with cloudServiceConfiguration, or with virtualMachineConfiguration using a Windows image reference). For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed.",
           "enum": [
             "currentuser",
             "localmachine",
@@ -10890,7 +10907,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "A list of certificates to be installed on each compute node in the pool.",
-          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."
+          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."
         },
         "applicationPackageReferences": {
           "type": "array",
@@ -12072,7 +12089,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "The list of certificates to be installed on each compute node in the pool.",
-          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."
+          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."
         },
         "applicationPackageReferences": {
           "type": "array",
@@ -12179,7 +12196,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "The list of certificates to be installed on each compute node in the pool.",
-          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."          
+          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."          
         },
         "applicationPackageReferences": {
           "type": "array",
@@ -12586,6 +12603,13 @@
             "$ref": "#/definitions/ApplicationPackageReference"
           },
           "title": "A list of application packages that the Batch service will deploy to the compute node before running the command line."
+        },
+        "authenticationTokenSettings": { 
+          "type": "array",
+          "title": "",
+          "items": {
+            "$ref": "#/definitions/AccessToken"
+          }
         }
       },
       "title": "An Azure Batch task."
@@ -12655,6 +12679,13 @@
             "$ref": "#/definitions/ApplicationPackageReference"
           },
           "title": "A list of application packages that the Batch service will deploy to the compute node before running the command line."
+        },
+        "authenticationTokenSettings": { 
+          "type": "array",
+          "title": "",
+          "items": {
+            "$ref": "#/definitions/AccessToken"
+          }
         }
       },
       "required": ["id", "commandLine"],
@@ -13035,7 +13066,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "The list of certificates installed on the compute node.",
-          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."
+          "description": "For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."
         },
         "errors": {
           "type": "array",
@@ -13330,7 +13361,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "A list of certificates to be installed on each compute node in the pool.",
-          "description": "If you specify an empty collection, any existing certificate references are removed from the pool. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."
+          "description": "If you specify an empty collection, any existing certificate references are removed from the pool. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."
         },
         "applicationPackageReferences": {
           "type": "array",
@@ -13375,7 +13406,7 @@
             "$ref": "#/definitions/CertificateReference"
           },
           "title": "A list of certificates to be installed on each compute node in the pool.",
-          "description": "If omitted, any existing certificate references are left unchanged. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/<user-name>/certs) where certificates are placed."
+          "description": "If omitted, any existing certificate references are left unchanged. For Windows compute nodes, the Batch service installs the certificates to the specified certificate store and location. For Linux compute nodes, the certificates are stored in a directory inside the task working directory and an environment variable AZ_BATCH_CERTIFICATES_DIR is supplied to the task to query for this location. For certificates with visibility of remoteuser, a certs directory is created in the user's home directory (e.g., /home/{user-name}/certs) where certificates are placed."
         },
         "applicationPackageReferences": {
           "type": "array",
