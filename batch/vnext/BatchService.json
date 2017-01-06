@@ -9902,16 +9902,15 @@
           "items": {
             "type": "string",
             "enum": [
-              "Job",
-              "unmapped"
+              "Job"
             ],
             "x-ms-enum": { "name": "AccessScope", "modelAsString": false }
           },
-          "title": "Which user accounts on the compute node should have access to the private data of the certificate.",
+          "title": ".",
           "description": "The default is all accounts."
         }        
       },
-      "title": "The result of listing the supported node agent SKUs."
+      "title": "."
     },
     "AccountListNodeAgentSkusResult": {
       "properties": {
