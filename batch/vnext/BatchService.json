@@ -9883,7 +9883,7 @@
         },
         "osType": {
           "type": "string",
-          "title": "The type of operating system (e.g. Windows or Linux) compatible with the node agent SKU.",
+          "title": "The type of operating system (e.g. Windows or Linux) compatilbauthenticationTokenSettingse with the node agent SKU.",
           "enum": [
             "linux",
             "windows",
@@ -9895,9 +9895,9 @@
       "title": "A node agent SKU supported by the Batch service.",
       "description": "The Batch node agent is a program that runs on each node in the pool, and provides the command-and-control interface between the node and the Batch service. There are different implementations of the node agent, known as SKUs, for different operating systems."
     },
-    "AccessToken": {
+    "AuthenticationTokenSettings": {
       "properties": {
-        "access": {
+        "AccessToken": {
           "type": "array",
           "items": {
             "type": "string",
@@ -10614,8 +10614,8 @@
         },
         "authenticationTokenSettings": { 
           "title": "The settings for an authentication token that the task can use to perform Batch service operations.",
-          "description": "Using an authentication token allows the task to add other tasks to the job, or check the state of other tasks, without the client sending the Batch account key.",
-          "$ref": "#/definitions/AccessToken"
+          "description": "Enables the use of a task authentication token. When enabled, a token will be provided inside an environment variable which can be used to authenticate Batch service operations related to the current job. This allows the task to add other tasks to the job, or check the state of other tasks, without requiring the account access key.",
+          "$ref": "#/definitions/AuthenticationTokenSettings"
         }
       },
       "required": ["id", "commandLine"],
@@ -12611,7 +12611,8 @@
         },
         "authenticationTokenSettings": { 
           "title": "The settings for an authentication token that the task can use to perform Batch service operations.",
-          "$ref": "#/definitions/AccessToken"          
+          "description": ".",
+          "$ref": "#/definitions/AuthenticationTokenSettings"
         }
       },
       "title": "An Azure Batch task."
@@ -12684,8 +12685,7 @@
         },
         "authenticationTokenSettings": { 
           "title": "The settings for an authentication token that the task can use to perform Batch service operations.",
-          "$ref": "#/definitions/AccessToken"
-          
+          "$ref": "#/definitions/AuthenticationTokenSettings"          
         }
       },
       "required": ["id", "commandLine"],
